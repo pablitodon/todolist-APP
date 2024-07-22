@@ -26,7 +26,6 @@ const AddTodo = ({ setTodo,logAction }) => {
                 });
                 const data = await response.json();
                 setTodo(data);
-                console.log(data);
             } catch (error) {
                 console.error(error);
             }
@@ -55,7 +54,6 @@ const AddTodo = ({ setTodo,logAction }) => {
                     body: JSON.stringify({title:textTodo})
                 });
                 const data =  await response.json();
-                console.log(data);
                 setTodo(prevTodos => [...prevTodos, {title:textTodo,id:data.id,isCompleted:false,user_id:data.id}])
             } catch (error) {
                 console.error(error);

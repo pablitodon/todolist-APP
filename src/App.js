@@ -8,7 +8,6 @@ import PrivateRoute from "./components/Form/PrivateRoute/PrivateRoute";
 
 const App = () => {
 
-
   return (
       <div>
         <Routes>

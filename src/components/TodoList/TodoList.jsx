@@ -4,7 +4,6 @@ import { Fragment } from 'react';
 
 const TodoList = ({ todos, setTodo, logAction }) => {
     const [isEdit, setEdit] = useState(null);
-    console.log(todos);
     const changeTask = (id) => {
         setEdit(id)
     }
