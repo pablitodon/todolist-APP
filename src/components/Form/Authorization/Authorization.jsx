@@ -16,12 +16,11 @@ const schema = yup.object().shape({
 });
 
 const Authorization = () => {
+
     const { control, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema)
     });
-
     const [err, setErr] = useState('');
-
     const navigate = useNavigate()
 
     const onSubmit = async (dataForm) => {
@@ -36,17 +35,17 @@ const Authorization = () => {
             });
             const dataResp = await response.json();
             if (response.ok) {
+                console.log(dataResp);
                 const token = dataResp.token
                 localStorage.setItem('myToken', token);
                 navigate('/homeTodoList');
             } else {
                 setErr(dataResp.message)
             }
-
         } catch (error) {
             console.error('Error fetching.1-100', error);
         }
-    }
+    };
 
     return (
         <div className={styles.wrapp}>

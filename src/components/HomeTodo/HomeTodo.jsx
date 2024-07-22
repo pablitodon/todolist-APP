@@ -9,10 +9,11 @@ import Logout from './LogOut/Logout';
 
 const AddTodoHOC = withLogger(AddTodo);
 const TodoListHOC = withLogger(TodoList);
-const HomeTodo = () => {
- 
-    const [todos, setTodo] = useState([]);
 
+
+const HomeTodo = () => {
+
+    const [todos, setTodo] = useState([]);
     return (
         <div className={styles.wrapp}>
             <AddTodoHOC 

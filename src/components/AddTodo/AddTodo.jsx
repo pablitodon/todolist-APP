@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import styles from '../styles/Styles.module.css'
 import withLogger from '../withLogger/withLogger';
@@ -13,6 +13,29 @@ const AddTodo = ({ setTodo,logAction }) => {
         setText(value);
         
     }
+
+    useEffect(() => {
+        const fetchTodos = async () => {
+            try {
+                const response = await fetch('https://todo-redev.herokuapp.com/api/todos', {
+                    method: 'GET',
+                    headers: {
+                        'accept': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
+                    }
+                });
+                const data = await response.json();
+                setTodo(data);
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchTodos();
+    }, []);
+
+
+
 
 
     const addTaskClick = () => {
@@ -32,7 +55,8 @@ const AddTodo = ({ setTodo,logAction }) => {
                     body: JSON.stringify({title:textTodo})
                 });
                 const data =  await response.json();
-                setTodo(prevTodos => [...prevTodos, {text:textTodo,id:data.id,isCompleted:false}])
+                console.log(data);
+                setTodo(prevTodos => [...prevTodos, {title:textTodo,id:data.id,isCompleted:false,user_id:data.id}])
             } catch (error) {
                 console.error(error);
             }
@@ -65,7 +89,6 @@ const AddTodo = ({ setTodo,logAction }) => {
                 {textTodo.length < 6 &&  <p className='text-red-800' >{inputError}</p>}
             </div>
             <button onClick={() => addTaskClick()}>Add Task</button>
-            
         </>
     );
 };
