@@ -54,7 +54,7 @@ const AddTodo = ({ setTodo,logAction }) => {
                     body: JSON.stringify({title:textTodo})
                 });
                 const data =  await response.json();
-                setTodo(prevTodos => [...prevTodos, {title:textTodo,id:data.id,isCompleted:false,user_id:data.id}])
+                setTodo(prevTodos => [...prevTodos, {title:textTodo,id:data.id,isCompleted:false}])
             } catch (error) {
                 console.error(error);
             }
