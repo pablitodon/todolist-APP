@@ -1,95 +1,47 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
-import styles from '../styles/Styles.module.css'
-import withLogger from '../withLogger/withLogger';
+import styles from './../styles/Styles.module.css'
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addTodoInput } from '../../redux/actions/addTodoInputAction';
+import { addErrorLengthInput } from '../../redux/actions/errorLengthInputAction';
+import { addTodo } from '../../redux/actions/todoListAction';
 
-const AddTodo = ({ setTodo,logAction }) => {
+const AddTodo = ({logAction}) => {
 
-    const [textTodo, setText] = useState('');
-    const [inputError, setInputError] = useState('');
+    const dispatch = useDispatch();
+    const { addTodoInputText } = useSelector(state => state.addTodoInputText);
+    const { inputError } = useSelector(state => state.inputError)
 
-    const handleChange = (event) => {
-        const value = event.target.value
-        setText(value);
-        
+    const handleAddTodoInputText = (textInput) => {
+        dispatch(addTodoInput(textInput));
     }
 
-    useEffect(() => {
-        const fetchTodos = async () => {
-            try {
-                const response = await fetch('https://todo-redev.herokuapp.com/api/todos', {
-                    method: 'GET',
-                    headers: {
-                        'accept': 'application/json',
-                        'Authorization': `Bearer ${localStorage.getItem('myToken')}`
-                    }
-                });
-                const data = await response.json();
-                setTodo(data);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchTodos();
-    }, []);
-
-
-
-
-
-    const addTaskClick = () => {
-        if (textTodo.length < 6 ) {
-            setInputError('Minimum length - 6 characters');
-            return
+    const handleAddTodo = (text) => {
+        if (addTodoInputText.length < 6 || addTodoInputText.trim().length === 0) {
+            dispatch(addErrorLengthInput('Text must be at least 6 characters long.'));
+            return;
         }
-        const fetchData = async() => {
-            try {
-                const response = await fetch('https://todo-redev.herokuapp.com/api/todos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'accept': 'application/json',
-                        'Authorization':`Bearer ${localStorage.getItem('myToken')}`
-                    },
-                    body: JSON.stringify({title:textTodo})
-                });
-                const data =  await response.json();
-                setTodo(prevTodos => [...prevTodos, {title:textTodo,id:data.id,isCompleted:false,user_id:data.id}])
-            } catch (error) {
-                console.error(error);
-            }
-           
-        }
-        fetchData();
-        logAction(`Добавлена задача : ${textTodo}`);
-        setText('')
-        setInputError('');
-    };
-
-    const addTaskKeyDown = (event) => {
-         if(event.key === 'Enter'){
-            addTaskClick()
-         }
+        logAction(`Добавлена задача ${text}`)
+        dispatch(addTodo(text))
+        dispatch(addErrorLengthInput(''));
+        dispatch(addTodoInput(''));
     }
 
     return (
-        <>
-            <h1>Get things done</h1>
-            <div className={styles.addTaskConatiner}>
-                <input
-                    type='text'
-                    value={textTodo}
-                    onChange={(event) => handleChange(event)}
-                    onKeyDown={addTaskKeyDown}
-                    placeholder='What is the task on today?'
-                    className='w-1/6'
-                />
-                {textTodo.length < 6 &&  <p className='text-red-800' >{inputError}</p>}
-            </div>
-            <button onClick={() => addTaskClick()}>Add Task</button>
-        </>
-    );
-};
+        <div className={styles.addTaskConatiner}>
+            <h1>Get things done!</h1>
+            <input
+                value={addTodoInputText}
+                type='text'
+                placeholder='What is the task today ?'
+                className='w-1/6'
+                onChange={(e) => handleAddTodoInputText(e.target.value)}
+            />
+            {inputError && <p className='text-red-800'>{inputError}</p>}
+            <button onClick={() => handleAddTodo(addTodoInputText)} > Add Task</button>
+        </div>
 
+    );
+}
 
 export default AddTodo;
+
