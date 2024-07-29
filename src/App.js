@@ -6,6 +6,7 @@ import Authorization from "./components/Form/Authorization/Authorization";
 import RegisterPage from "./components/Form/Register/RegisterPage";
 import PrivateRoute from "./components/Form/PrivateRoute/PrivateRoute";
 
+
 const App = () => {
 
   return (

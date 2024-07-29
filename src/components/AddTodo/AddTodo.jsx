@@ -17,7 +17,7 @@ const AddTodo = ({ setTodo,logAction }) => {
     useEffect(() => {
         const fetchTodos = async () => {
             try {
-                const response = await fetch('https://todo-redev.herokuapp.com/api/todos', {
+                const response = await fetch(apiUrl, {
                     method: 'GET',
                     headers: {
                         'accept': 'application/json',
@@ -34,7 +34,7 @@ const AddTodo = ({ setTodo,logAction }) => {
     }, []);
 
 
-
+    const apiUrl = process.env.REACT_APP_API_URL_TODOS; // Добавь эту строку в свой .env
 
 
     const addTaskClick = () => {
@@ -44,7 +44,7 @@ const AddTodo = ({ setTodo,logAction }) => {
         }
         const fetchData = async() => {
             try {
-                const response = await fetch('https://todo-redev.herokuapp.com/api/todos', {
+                const response = await fetch(apiUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { Fragment } from 'react';
 
 const TodoList = ({ todos, setTodo, logAction }) => {
+    const apiUrl = process.env.REACT_APP_API_URL_TODOS
+
     const [isEdit, setEdit] = useState(null);
     const changeTask = (id) => {
         setEdit(id)
@@ -19,7 +21,7 @@ const TodoList = ({ todos, setTodo, logAction }) => {
     const deleteTask = (id, title) => {
         const deleteFetch = async () => {
             try {
-                const response = await fetch(`https://todo-redev.herokuapp.com/api/todos/${id}`, {
+                const response = await fetch(`${apiUrl}/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'accept': 'application/json',
@@ -42,7 +44,7 @@ const TodoList = ({ todos, setTodo, logAction }) => {
         logAction(`Задача изменена: ${title}`);
         const fetchChange = async () => {
             try {
-                const response = await fetch(`https://todo-redev.herokuapp.com/api/todos/${id}`, {
+                const response = await fetch(`${apiUrl}/${id}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',
@@ -64,7 +66,7 @@ const TodoList = ({ todos, setTodo, logAction }) => {
 
         const fetchSuccess = async () => {
             try {
-                const response = await fetch(`https://todo-redev.herokuapp.com/api/todos/${id}/isCompleted`, {
+                const response = await fetch(`${apiUrl}/${id}/isCompleted`, {
                     method: 'PATCH',
                     headers: {
                         'accept': 'application/json',
