@@ -29,3 +29,6 @@ button{
     @apply flex flex-col text-center items-center justify-center p-20 mb-20 min-h-max max-w-3xl mx-auto  bg-gray-900/10  border-x-gray-200 rounded-xl shadow-2xl shadow-gray-800 h-screen h-max
 }
 
+s{
+    @apply text-gray-600/25
+}

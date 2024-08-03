@@ -13,11 +13,7 @@ const TodoListHOC = withLogger(TodoList);
 
 
 const HomeTodo = () => {
-
     const [todos, setTodo] = useState([]);
-
-    
-
     
     return (
         <div className={styles.wrapp}>

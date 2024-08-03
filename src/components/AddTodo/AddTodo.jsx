@@ -1,47 +1,48 @@
-import styles from './../styles/Styles.module.css'
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addTodoInput } from '../../redux/actions/addTodoInputAction';
-import { addErrorLengthInput } from '../../redux/actions/errorLengthInputAction';
-import { addTodo } from '../../redux/actions/todoListAction';
+import { useSelector, useDispatch } from 'react-redux';
+import styles from './../styles/Styles.module.css';
+import { setValueInput } from '../../redux/slices/addTodoInputSlice';
+import { clearError, setError } from '../../redux/slices/errorInputAddTodoSlice';
+import { addTodo } from '../../redux/slices/todoSlice';
 
 const AddTodo = ({logAction}) => {
-
     const dispatch = useDispatch();
-    const { addTodoInputText } = useSelector(state => state.addTodoInputText);
-    const { inputError } = useSelector(state => state.inputError)
+    const inputText = useSelector(state => state.addTodoInput.valueInput);
+    const errInput = useSelector(state => state.inputErrorAddTodo.valueErr)
 
-    const handleAddTodoInputText = (textInput) => {
-        dispatch(addTodoInput(textInput));
-    }
+    const handleChange = (text) => {
+        dispatch(setValueInput(text))
+    };
 
-    const handleAddTodo = (text) => {
-        if (addTodoInputText.length < 6 || addTodoInputText.trim().length === 0) {
-            dispatch(addErrorLengthInput('Text must be at least 6 characters long.'));
-            return;
-        }
-        logAction(`Добавлена задача ${text}`)
-        dispatch(addTodo(text))
-        dispatch(addErrorLengthInput(''));
-        dispatch(addTodoInput(''));
-    }
+    const handleAddTodo = (textTodo) => {
+        if (inputText.length < 6 || inputText.trim().length === 0) {
+            dispatch(setError('Text must be at least 6 characters long.'))
+            return
+        };
+        dispatch(setValueInput(textTodo))
+        dispatch(addTodo(inputText))
+        logAction(`Добавлена задача: ${inputText}`)
+        dispatch(clearError())
+        dispatch(setValueInput(''))
+    };
+
+
+
 
     return (
         <div className={styles.addTaskConatiner}>
             <h1>Get things done!</h1>
             <input
-                value={addTodoInputText}
-                type='text'
-                placeholder='What is the task today ?'
                 className='w-1/6'
-                onChange={(e) => handleAddTodoInputText(e.target.value)}
+                placeholder='What is the task today?'
+                type='text'
+                value={inputText}
+                onChange={(e) => handleChange(e.target.value)}
             />
-            {inputError && <p className='text-red-800'>{inputError}</p>}
-            <button onClick={() => handleAddTodo(addTodoInputText)} > Add Task</button>
+            {errInput && <p className='text-red-800 font-bold'>{errInput}</p>}
+            <button onClick={() => handleAddTodo(inputText)}>Add Task</button>
         </div>
-
     );
-}
+};
 
 export default AddTodo;
-
