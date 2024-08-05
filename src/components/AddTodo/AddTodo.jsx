@@ -34,7 +34,7 @@ const AddTodo = ({ setTodo,logAction }) => {
     }, []);
 
 
-    const apiUrl = process.env.REACT_APP_API_URL_TODOS; // Добавь эту строку в свой .env
+    const apiUrl = process.env.REACT_APP_API_URL_TODOS;
 
 
     const addTaskClick = () => {
