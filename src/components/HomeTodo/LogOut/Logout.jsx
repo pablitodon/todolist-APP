@@ -1,16 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
 
 const Logout = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        // Очистка localStorage
+        localStorage.clear();
+        // Дополнительные действия: сброс состояния аутентификации, если это необходимо
+        // Перенаправление на страницу авторизации после выхода
+        navigate('/authorization');
+    };
+
     return (
-        <Link 
-        onClick={ () => localStorage.clear()}
-        to='/authorization'
-        className='inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline'
+        <button 
+            onClick={handleLogout}
+            className='inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline'
         >
             Log Out
-        </Link>
+        </button>
     );
 };
 

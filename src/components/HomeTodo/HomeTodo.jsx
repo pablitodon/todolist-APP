@@ -16,9 +16,10 @@ const HomeTodo = () => {
     const [todos, setTodo] = useState([]);
     return (
         <div className={styles.wrapp}>
-            <AddTodoHOC 
+            <AddTodoHOC
               todos= {todos} 
-              setTodo = {setTodo} />
+              setTodo = {setTodo} 
+              />
            <TodoListHOC
              todos= {todos} 
              setTodo = {setTodo}

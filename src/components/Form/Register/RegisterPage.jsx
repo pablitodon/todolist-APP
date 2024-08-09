@@ -1,10 +1,14 @@
-import React,{useState} from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { Input, Radio, Button } from 'antd';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate, Link } from 'react-router-dom';
 import styles from './../../styles/Styles.module.css'
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPostRegisterUser } from '../../../redux/slices/formRegisterUserSlice';
+
+
 
 const schema = yup.object().shape({
     username: yup.string().required('Введите имя'),
@@ -28,50 +32,33 @@ const schema = yup.object().shape({
         .min(18, 'Вам должно быть не менее 18 лет'),
 
 
-})
+});
+
 
 const RegisterPage = () => {
-    const [errorMessage, setErrorMessage] = useState('');
+
     const { handleSubmit, control, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const {status,data} = useSelector(state => state.formRegUser);
+    
+if(status ==='succeeded' && data ) {
+    navigate('/authorization')
+}
 
-    const onSubmit = (dataForms) => {
-        if (dataForms) {
-            const fetchData = async () => {
-                try {
-                    const response = await fetch('https://todo-redev.herokuapp.com/api/users/register', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'accept': 'application/json',
-                        },
-                        body: JSON.stringify(dataForms),
-                    });
-                    const data = await response.json();
-                    console.log(data);
-                    if (!response.ok) {
-                        setErrorMessage(data.message); // Устанавливаем сообщение об ошибке
-                        return;
-                    }
-                    if (response.ok) {
-                        navigate('/authorization')
-                    }
-                } catch (error) {
-                    console.error(error);
-                }
-            };
-            fetchData();
+
+    const onSubmit = (data) => {
+        if(data){
+            dispatch(fetchPostRegisterUser(data));
         }
     }
-
-
     return (
         <div className={styles.wrapp}>
             <h1>Welcome!</h1>
-            {errorMessage && <p className='text-red-500 xl font-bold'>{errorMessage}</p>}
-            <form className='w-3/5 text-center mx-auto' onSubmit={handleSubmit(onSubmit)}>
+            {/* {errorMessage && <p className='text-red-500 xl font-bold'>{errorMessage}</p>} */}
+            <form className='w-3/5 text-center mx-auto' onSubmit={handleSubmit(onSubmit)} >
                 <div>
                     <label>UserName:</label>
                     <Controller
@@ -141,5 +128,36 @@ const RegisterPage = () => {
     );
 };
 
-
 export default RegisterPage;
+
+
+
+
+// const onSubmit = (dataForms) => {
+//     if (dataForms) {
+//         const fetchData = async () => {
+//             try {
+//                 const response = await fetch('https://todo-redev.herokuapp.com/api/users/register', {
+//                     method: 'POST',
+//                     headers: {
+//                         'Content-Type': 'application/json',
+//                         'accept': 'application/json',
+//                     },
+//                     body: JSON.stringify(dataForms),
+//                 });
+//                 const data = await response.json();
+//                 console.log(data);
+//                 if (!response.ok) {
+//                     // setErrorMessage(data.message); // Устанавливаем сообщение об ошибке
+//                     return;
+//                 }
+//                 if (response.ok) {
+//                     navigate('/authorization')
+//                 }
+//             } catch (error) {
+//                 console.error(error);
+//             }
+//         };
+//         fetchData();
+//     }
+// }
