@@ -40,8 +40,6 @@ const formAuthorizationSlice = createSlice({
       .addCase(fetchPostLoginUser.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
-        console.log(action.payload);
-        
         localStorage.setItem('myToken',action.payload.token)
 
       })

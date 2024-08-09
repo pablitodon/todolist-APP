@@ -1,4 +1,4 @@
-import React from  'react';
+import React, { useEffect } from  'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Input, Button } from 'antd';
 import * as yup from 'yup';
@@ -25,11 +25,23 @@ const Authorization = () => {
     });
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    
+    const { status, data } = useSelector(state => state.formLogin); 
+    console.log(status);
+    console.log(data);
 
+    const token = localStorage.getItem('myToken');
+    console.log(token);
+
+    useEffect(() => {
+        if (token) {
+            navigate('/homeTodoList');
+        }
+    }, [token, navigate])
+
+
+    
     const onSubmit = (formData) => {
          dispatch(fetchPostLoginUser(formData))
-         navigate('/homeTodoList');
     }
  
     return (
@@ -60,7 +72,7 @@ const Authorization = () => {
             <div className='text-center mx-auto'>
                 Don't have an account?
                 <Link
-                    to={'/'}
+                    to='/'
                     className='inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline'>
                     Sign Up!
                 </Link>

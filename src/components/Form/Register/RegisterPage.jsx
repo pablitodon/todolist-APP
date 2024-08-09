@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { Input, Radio, Button } from 'antd';
@@ -44,10 +44,12 @@ const RegisterPage = () => {
     const dispatch = useDispatch();
     const {status,data} = useSelector(state => state.formRegUser);
     
-if(status ==='succeeded' && data ) {
-    navigate('/authorization')
-}
 
+    useEffect(() => {
+        if (data && status === 'succeeded') {
+            navigate('/homeTodoList');
+        }
+    }, [data, navigate])
 
     const onSubmit = (data) => {
         if(data){
