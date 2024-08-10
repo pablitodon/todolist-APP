@@ -36,9 +36,6 @@ const formRegisterUserSlice = createSlice({
       .addCase(fetchPostRegisterUser.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data = action.payload;
-      
-        console.log(action.payload);
-        
       })
       .addCase(fetchPostRegisterUser.rejected, (state, action) => {
         state.status = "failed";

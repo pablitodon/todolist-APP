@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './../../styles/Styles.module.css'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchPostLoginUser } from '../../../redux/slices/formAuthorizationSlice';
 
 const schema = yup.object().shape({
@@ -25,13 +25,8 @@ const Authorization = () => {
     });
     const navigate = useNavigate()
     const dispatch = useDispatch();
-    const { status, data } = useSelector(state => state.formLogin); 
-    console.log(status);
-    console.log(data);
 
     const token = localStorage.getItem('myToken');
-    console.log(token);
-
     useEffect(() => {
         if (token) {
             navigate('/homeTodoList');

@@ -8,7 +8,6 @@ const TodoList = ({ logAction }) => {
     const dispatch = useDispatch();
     const { status, data } = useSelector(state => state.todos);
     const isEditMode = useSelector(state => state.editModeTodo)
-    console.log(data);
         
     
 
@@ -27,6 +26,8 @@ const TodoList = ({ logAction }) => {
     const handleSaveEdit= (id,newText) => {
         dispatch(fetchPatchTodo({id,newText}));
         dispatch(changeEditMode(id));
+        console.log(newText);
+        
     }
 
     const handleCompleteTodo = (id,completed) => {

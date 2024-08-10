@@ -15,7 +15,6 @@ const postLoginUser = async (formData) => {
       },
     }
   );
-  console.log(response);
   return response;
 };
 

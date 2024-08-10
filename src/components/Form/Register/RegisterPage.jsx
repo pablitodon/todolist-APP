@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { Input, Radio, Button } from 'antd';
@@ -134,32 +134,3 @@ export default RegisterPage;
 
 
 
-
-// const onSubmit = (dataForms) => {
-//     if (dataForms) {
-//         const fetchData = async () => {
-//             try {
-//                 const response = await fetch('https://todo-redev.herokuapp.com/api/users/register', {
-//                     method: 'POST',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                         'accept': 'application/json',
-//                     },
-//                     body: JSON.stringify(dataForms),
-//                 });
-//                 const data = await response.json();
-//                 console.log(data);
-//                 if (!response.ok) {
-//                     // setErrorMessage(data.message); // Устанавливаем сообщение об ошибке
-//                     return;
-//                 }
-//                 if (response.ok) {
-//                     navigate('/authorization')
-//                 }
-//             } catch (error) {
-//                 console.error(error);
-//             }
-//         };
-//         fetchData();
-//     }
-// }

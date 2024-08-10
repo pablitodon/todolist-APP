@@ -5,10 +5,7 @@ const Logout = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        // Очистка localStorage
         localStorage.clear();
-        // Дополнительные действия: сброс состояния аутентификации, если это необходимо
-        // Перенаправление на страницу авторизации после выхода
         navigate('/authorization');
     };
 

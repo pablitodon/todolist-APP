@@ -153,9 +153,7 @@ const todosSlice = createSlice({
       .addCase(fetchPatchCompleteTodo.fulfilled,(state,action) => {
         state.status = "succeeded";
         const updatedTodo = action.payload[0];
-        console.log(updatedTodo); 
         const existingTodo = state.data.find((todo) => todo.id === updatedTodo.id);
-        console.log(existingTodo); 
         if (existingTodo) {
           existingTodo.isCompleted = updatedTodo.isCompleted; 
         }
