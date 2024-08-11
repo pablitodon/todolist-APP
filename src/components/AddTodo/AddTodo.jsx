@@ -7,7 +7,7 @@ import { setValueInput } from '../../redux/slices/addTodoInputSlice';
 
 
 
-const AddTodo = () => {
+const AddTodo = ({logAction}) => {
     const dispatch = useDispatch();
     const {textInput} = useSelector(state => state.addTodoTextInput);
     
@@ -17,7 +17,9 @@ const handleChange = (textAddInput) => {
 
     const handleClick = (text) => {
    dispatch(fetchPostTodo(text));
+   logAction(`Add todo:${text}`)
    dispatch(setValueInput(''))
+   
     }
     
     const handleKeyDown = (event) => {

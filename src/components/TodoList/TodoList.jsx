@@ -25,13 +25,15 @@ const TodoList = ({ logAction }) => {
 
     const handleSaveEdit= (id,newText) => {
         dispatch(fetchPatchTodo({id,newText}));
+        logAction(`Edit todo:${newText}`)
         dispatch(changeEditMode(id));
-        console.log(newText);
-        
     }
 
-    const handleCompleteTodo = (id,completed) => {
+    const handleCompleteTodo = (id,completed,title) => {
         dispatch(fetchPatchCompleteTodo(id,completed));
+        if(!completed) {
+            logAction(`complete todo:${title}`)
+        }
     }
     
     return (
@@ -54,7 +56,7 @@ const TodoList = ({ logAction }) => {
                                     :
                                    ( <div>
                                     
-                                       <div onClick={() => handleCompleteTodo(todos.id,todos.isCompleted)}>
+                                       <div onClick={() => handleCompleteTodo(todos.id,todos.isCompleted,todos.title)}>
                                        { todos.isCompleted ? <s>{todos.title}</s> : <p>{todos.title}</p>}
                                        </div>
                                         <button onClick={() => dispatch(changeEditMode(todos.id))}>

@@ -5,7 +5,7 @@ import * as yup from 'yup';
 import { useForm, Controller } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './../../styles/Styles.module.css'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchPostLoginUser } from '../../../redux/slices/formAuthorizationSlice';
 
 const schema = yup.object().shape({
@@ -25,13 +25,15 @@ const Authorization = () => {
     });
     const navigate = useNavigate()
     const dispatch = useDispatch();
-
+    const {status,data} = useSelector( state => state.formLogin)
+    console.log(data);
+    
     const token = localStorage.getItem('myToken');
     useEffect(() => {
-        if (token) {
+        if (token ) {
             navigate('/homeTodoList');
         }
-    }, [token, navigate])
+    }, [token, navigate,data])
 
 
     
@@ -41,6 +43,7 @@ const Authorization = () => {
  
     return (
         <div className={styles.wrapp}>
+            {status === 'loading'&&  <p>Loading...</p>}
             <form className={styles.wrappLogin} onSubmit={handleSubmit(onSubmit)}>
                 <div>
                     <label>Email:</label>

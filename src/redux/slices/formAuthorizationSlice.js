@@ -40,7 +40,6 @@ const formAuthorizationSlice = createSlice({
         state.status = "succeeded";
         state.data = action.payload;
         localStorage.setItem('myToken',action.payload.token)
-
       })
       .addCase(fetchPostLoginUser.rejected, (state, action) => {
         state.status = "failed";
